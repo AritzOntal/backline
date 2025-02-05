@@ -50,34 +50,36 @@ app.put('/guitars/:guitarId', async(req, res) => {
 
 //CRUD ALQUILERES
 
-app.get('/alquileres', async (req, res) => {
-    const result = await db('guitars').select('*');
+app.get('/rentals', async (req, res) => {
+    const result = await db('guitar_rentals').select('*');
     res.status(200).json(result);
 })
 
-app.post('/alquileres', async (req, res) => {
-    await db('').insert({
-        model: req.body.model,
-        year: req.body.year,
-        condition: req.body.condition
+app.post('/rentals', async (req, res) => {
+    await db('guitar_rentals').insert({
+        id_client: req.body.id_client,
+        id_guitar: req.body.id_guitar,
+        date: req.body.date,
+        return_date: req.body.return_date
     });
 
     res.status(201).json({})
 });
 
-app.delete('/alquileres/:', async (req, res) => {
+app.delete('/rentals/:rentalId', async (req, res) => {
 
-    const { guitarId } = req.params;
-    await db('').where({ id_guitar: guitarId }).del();
+    const { rentalId } = req.params;
+    await db('guitar_rentals').where({ id_guitar_rental: rentalId }).del();
 
     res.status(204).send()
 });
 
-app.put('/alquileres/:', async(req, res) => {
-    await db('').where({ id_guitar: req.params.guitarId}).update({
-    model: req.body.model,
-    year: req.body.year,
-    condition: req.body.condition
+app.put('/rentals/:rentalId', async(req, res) => {
+    await db('guitar_rentals').where({ id_guitar_rental: req.params.rentalId}).update({
+        id_client: req.body.id_client,
+        id_guitar: req.body.id_guitar,
+        date: req.body.date,
+        return_date: req.body.return_date
     });
 
     res.status(204).send();
