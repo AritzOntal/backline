@@ -50,6 +50,40 @@ app.put('/guitars/:guitarId', async(req, res) => {
 
 //CRUD ALQUILERES
 
+app.get('/rentals', async (req, res) => {
+    const result = await db('guitar_rentals').select('*');
+    res.status(200).json(result);
+})
+
+app.post('/rentals', async (req, res) => {
+    await db('guitar_rentals').insert({
+        id_client: req.body.id_client,
+        id_guitar: req.body.id_guitar,
+        date: req.body.date,
+        return_date: req.body.return_date
+    });
+
+    res.status(201).json({})
+});
+
+app.delete('/rentals/:rentalId', async (req, res) => {
+
+    const { rentalId } = req.params;
+    await db('guitar_rentals').where({ id_guitar_rental: rentalId }).del();
+
+    res.status(204).send()
+});
+
+app.put('/rentals/:rentalId', async(req, res) => {
+    await db('guitar_rentals').where({ id_guitar_rental: req.params.rentalId}).update({
+        id_client: req.body.id_client,
+        id_guitar: req.body.id_guitar,
+        date: req.body.date,
+        return_date: req.body.return_date
+    });
+
+    res.status(204).send();
+})
 
 
 app.listen(8080, () => {
