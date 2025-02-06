@@ -1,19 +1,26 @@
 import axios from "axios";
 
 
-function showGuitars() {
+window.showGuitars = function() {
     axios.get('http://localhost:8080/guitars')
         .then(response => {
             const allGuitars = response.data;
-            const guitarList = document.getElementById('guitar-list');
+            const guitarTable = document.getElementById('tablebody');
 
             //LIMPIA LA LISTA ANTES DE RENDERIZAR LA LISTA DE GUITARRAS
-            guitarList.innerHTML = '';
+            guitarTable.innerHTML = '';
 
             allGuitars.forEach(guitar => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `model: ${guitar.model}, year: ${guitar.year}, condition: ${guitar.condition}`;
-                guitarList.appendChild(listItem);
+                //CREA UN ELEMENTO DE "FILA" Y LO GUARDA EN UNA VARIABLE
+                const row = document.createElement('tr');
+                //METE CODIGO HTML CON innerHTML
+                row.innerHTML = '<td>' + guitar.model + '</td>' +
+                                '<td>' + guitar.year + '</td>' +
+                                '<td>' + guitar.condition + '</td>' +
+                                '<a class="btn btn-warning" href="#">Modificar</a> <a class= "btn btn-danger" href= "#">Eliminar</a>' ;
+
+                //CREA UN HIJO EN LA CLASE QUE HEMOS CREADO EN DE LA FILA "ROW" GUARDADA
+                guitarTable.appendChild(row);
             });
         })
 }
@@ -28,18 +35,16 @@ document.getElementById('guitar-form').addEventListener('submit', function (even
     const year = document.getElementById('year').value;
     const condition = document.getElementById('condition').value;
 
-    // Verificar que los campos no estén vacíos
+    // OBLIGAR A ESCRIBIR ALGO ANTES DE ENVIAR
     if (!model || !year || !condition) {
         alert("Todos los campos son obligatorios.");
         return;
     }
-
     addGuitars(model, year, condition);
-
 });
 
-//LLAMAR LA METODO CON AXIOS
 
+//LLAMAR LA METODO CON AXIOS (CON SUS PARAMETROS)
 function addGuitars(model, year, condition) {
     axios.post('http://localhost:8080/guitars', { model, year, condition })
         .then(response => {
@@ -54,6 +59,21 @@ function addGuitars(model, year, condition) {
             console.error("Error al añadir guitarra:", error);
             alert("Hubo un error al añadir la guitarra");
         });
+
+}
+
+
+function delGuitars(idGuitar){
+    axios.delete('http://localhost:8080/guitars/:guitarId')
+    .then(response => {
+        console.log('guitarra eliminada', response.data)
+        alert('guitarra eliminada correctamente')
+        showGuitars();
+})
+.catch(error => {
+    console.error("Error al eliminar guitarra:", error);
+    alert("Hubo un error al eliminar la guitarra");
+});
 
 }
 
