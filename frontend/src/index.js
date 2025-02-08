@@ -17,7 +17,7 @@ window.showGuitars = function() {
                 row.innerHTML = '<td>' + guitar.model + '</td>' +
                                 '<td>' + guitar.year + '</td>' +
                                 '<td>' + guitar.condition + '</td>' +
-                                '<a class="btn btn-warning" href="#">Modificar</a> <a class= "btn btn-danger" href= "#">Eliminar</a>' ;
+                                '<a class="btn btn-warning" href="#" ">Modificar</a> <a class= "btn btn-danger" href= "javascript:delGuitars(' + guitar.id_guitar + ')">Eliminar</a>';
 
                 //CREA UN HIJO EN LA CLASE QUE HEMOS CREADO EN DE LA FILA "ROW" GUARDADA
                 guitarTable.appendChild(row);
@@ -28,7 +28,7 @@ window.showGuitars = function() {
 //ESCUHAR AL FORMULARIO
 
 document.getElementById('guitar-form').addEventListener('submit', function (event) {
-    event.preventDefault(); // Evita que la página se recargue
+    event.preventDefault();
 
     // Obtener los valores del formulario
     const model = document.getElementById('model').value;
@@ -62,9 +62,9 @@ function addGuitars(model, year, condition) {
 
 }
 
-
-function delGuitars(idGuitar){
-    axios.delete('http://localhost:8080/guitars/:guitarId')
+window.delGuitars = function(id_guitar) {
+    if (confirm('¿Seguro que quieres eliminar guitarra de stock?')) {
+    axios.delete('http://localhost:8080/guitars/' + id_guitar)
     .then(response => {
         console.log('guitarra eliminada', response.data)
         alert('guitarra eliminada correctamente')
@@ -74,8 +74,7 @@ function delGuitars(idGuitar){
     console.error("Error al eliminar guitarra:", error);
     alert("Hubo un error al eliminar la guitarra");
 });
-
+    }
 }
-
 //ASEGURARSE DE QUE SE CARGUE TODO EL CONTENIDO HTML ANTES DE UTILIZAR METODOS (SIN FOTOS, NI OTRAS CARGAS)
 document.addEventListener('DOMContentLoaded', showGuitars);
