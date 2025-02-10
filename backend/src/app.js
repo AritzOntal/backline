@@ -21,6 +21,11 @@ app.get('/guitars', async (req, res) => {
     res.status(200).json(result);
 })
 
+app.get('/guitars/:guitarId', async (req, res) => {
+    const result = await db('guitars').where({id_guitar: req.params.guitarId});
+    res.status(200).json(result);
+})
+
 app.post('/guitars', async (req, res) => {
     await db('guitars').insert({
         model: req.body.model,
