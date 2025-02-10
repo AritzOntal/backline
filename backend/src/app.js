@@ -61,6 +61,11 @@ app.get('/rentals', async (req, res) => {
     res.status(200).json(result);
 })
 
+app.get('/rentals/:rentalId', async (req, res) => {
+    const result = await db('guitar_rentals').where({id_guitar_rental: req.params.rentalId});
+    res.status(200).json(result);
+})
+
 app.post('/rentals', async (req, res) => {
     await db('guitar_rentals').insert({
         id_client: req.body.id_client,
