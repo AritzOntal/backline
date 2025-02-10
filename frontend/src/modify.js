@@ -1,22 +1,22 @@
+import axios from "axios";
 
-window.loadGuitar = function() {
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("DOM completamente cargado.");
+    loadGuitar();
+});
+
+window.loadGuitar = function () {
     const queryParams = new URLSearchParams(window.location.search);
-    const guiarId = queryParams.get('id');
-
-};
-
-
-window.getGuitar = function() {
-    axios.get('http://localhost:8080/guitars/guiarId')
-    .then(response => { 
-        const guitarDate = response.data;
-    })
-}
-
-
-window.editGuitar = function() {
-    const model = document.getElementById('model').value;
-    const year = document.getElementById('year').value;
-    const condition = document.getElementById('condition').value;
-
+    const guitarId = queryParams.get('id');
+    axios.get('http://localhost:8080/guitars/' + guitarId)
+    .then(response => {
+            const guitarData = response.data;
+            console.log("Datos de guitarra:", guitarData);
+            document.getElementById("model").value = guitarData.model;
+            document.getElementById("year").value = guitarData.year;
+            document.getElementById("condition").value = guitarData.condition;
+        })
+        .catch(error => {
+            console.error("Error al obtener la guitarra:", error);
+        });
 }

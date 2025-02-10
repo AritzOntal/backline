@@ -22,7 +22,7 @@ app.get('/guitars', async (req, res) => {
 })
 
 app.get('/guitars/:guitarId', async (req, res) => {
-    const result = await db('guitars').where({id_guitar: req.params.guitarId});
+    const result = await db('guitars').where({id_guitar: req.params.guitarId}).first();
     res.status(200).json(result);
 })
 

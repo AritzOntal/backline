@@ -1,6 +1,7 @@
 import axios from "axios";
 
 
+
 window.showGuitars = function () {
     axios.get('http://localhost:8080/guitars')
         .then(response => {
