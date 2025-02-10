@@ -11,50 +11,89 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Stock</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="alquiler.html">Alquiler</a>
-                    </li>
-                </ul>
+   
+    <main class="container mt-4">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">Stock</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="alquiler.html">Rent</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="imagen">
+            <img src="Choosing-the-Best-Guitar-Body-Style-Featured-Image.jpg" alt="Guitar body styles" width="600">
+        </div>
+        <br>
+        <h2>GUITAR STOCK</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Condition</th>
+                </tr>
+            </thead>
+            <tbody id="tablebody">
+            </tbody>
+        </table>
+
+        <h2>Add new guitar</h2>
+        <form class="mb-3" id="guitar-form">
+            <input type="text" class="form-control" id="model" placeholder="Model" required>
+            <input type="number" class="form-control" id="year" placeholder="Year" required>
+            <input type="text" class="form-control" id="condition" placeholder="Condition (new/used...)" required>
+            <button type="submit" class="btn btn-primary">Añadir</button>
+        </form>
+
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Modificar Guitarra</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario para editar -->
+                    <form id="editForm">
+                        <div class="mb-3">
+                            <label for="guitarModel" class="form-label">Modelo</label>
+                            <input type="text" class="form-control" id="guitarModel" placeholder="Ingrese el modelo de guitarra">
+                        </div>
+                        <div class="mb-3">
+                            <label for="guitarYear" class="form-label">Año</label>
+                            <input type="number" class="form-control" id="guitarYear" placeholder="Ingrese el año de la guitarra">
+                        </div>
+                        <div class="mb-3">
+                            <label for="guitarCondition" class="form-label">Condición</label>
+                            <select class="form-control" id="guitarCondition">
+                                <option value="new">Nueva</option>
+                                <option value="used">Usada</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChanges()">Guardar Cambios</button>
+                </div>
             </div>
         </div>
-    </nav>
-
-    <div class="imagen">
-        <img src="Choosing-the-Best-Guitar-Body-Style-Featured-Image.jpg"alt="Guitar body styles" width="600">
     </div>
-    <br>
-    <h2>GUITAR STOCK</h2>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Model</th>
-                <th>Year</th>
-                <th>Condition</th>
-            </tr>
-        </thead>
-        <tbody id="tablebody">
-        </tbody>
-    </table>
-
-    <h2>Añadir nueva guitarra</h2>
-    <form class="mb-3" id="guitar-form">
-        <input type="text" class="form-control" id="model" placeholder="Model" required>
-        <input type="number" class="form-control" id="year" placeholder="Year" required>
-        <input type="text" class="form-control" id="condition" placeholder="Condition (new/used...)" required>
-        <button type="submit" class="btn btn-primary">Añadir</button>
-    </form>
+    </main>
 
 </body>
 
