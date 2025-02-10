@@ -26,10 +26,6 @@ app.get('/guitars/:guitarId', async (req, res) => {
     res.status(200).json(result);
 })
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 app.post('/guitars', async (req, res) => {
     await db('guitars').insert({
         model: req.body.model,
