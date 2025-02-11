@@ -1,7 +1,5 @@
 import axios from "axios";
 
-
-
 window.showGuitars = function () {
     axios.get('http://localhost:8080/guitars')
         .then(response => {
@@ -18,7 +16,8 @@ window.showGuitars = function () {
                 row.innerHTML = '<td>' + guitar.model + '</td>' +
                     '<td>' + guitar.year + '</td>' +
                     '<td>' + guitar.condition + '</td>' +
-                    '<a class="btn btn-primary" href="modify.html?id=' + guitar.id_guitar + '">Edit</a> <a class="btn btn-dark" href="javascript:delGuitars(' + guitar.id_guitar + ')">Delete</a>';
+                    '<a class="btn btn-primary" href="modify.html?id=' + guitar.id_guitar + '">Edit</a> <a class="btn btn-dark" href="javascript:delGuitars(' + guitar.id_guitar + ')">Delete</a>' +
+                    '<a class="btn btn-success" href="rentals.html?id=' + guitar.id_guitar + '">RENT</a>';
                 //CREA UN HIJO EN LA CLASE QUE HEMOS CREADO EN DE LA FILA "ROW" GUARDADA
                 guitarTable.appendChild(row);
             });
