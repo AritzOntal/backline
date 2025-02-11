@@ -73,12 +73,12 @@ app.get('/rentals', async (req, res) => {
 })
 
 app.get('/rentals/:rentalId', async (req, res) => {
-    const result = await db('guitar_rentals').where({ id_guitar_rental: req.params.rentalId });
+    const result = await db('guitar_rentals').where({ id_guitar_rental: req.params.rentalId }).first();
     res.status(200).json(result);
 })
 
 app.post('/rentals', async (req, res) => {
-    
+
     try {
 
         await db('guitar_rentals').insert({
@@ -95,8 +95,8 @@ app.post('/rentals', async (req, res) => {
             return res.status(400).json({ error: 'El ID de guitarra no existe' });
         }
     }
-    
-    res.status(201).json({message: 'Alquiler registrado correctamente'});
+
+    res.status(201).json({ message: 'Alquiler registrado correctamente' });
 });
 
 app.delete('/rentals/:rentalId', async (req, res) => {
@@ -108,12 +108,20 @@ app.delete('/rentals/:rentalId', async (req, res) => {
 });
 
 app.put('/rentals/:rentalId', async (req, res) => {
-    await db('guitar_rentals').where({ id_guitar_rental: req.params.rentalId }).update({
-        id_guitar: req.body.id_guitar,
-        date: req.body.date,
-        return_date: req.body.return_date,
-        name: req.body.name
-    });
+    try {
+        await db('guitar_rentals').where({ id_guitar_rental: req.params.rentalId }).update({
+            id_guitar: req.body.id_guitar,
+            date: req.body.date,
+            return_date: req.body.return_date,
+            name: req.body.name
+        });
+    } catch (error) {
+        console.error('❌ Error al registrar el alquiler:', error.message);
+
+        if (error.message.includes('FOREIGN KEY constraint failed')) {
+            return res.status(400).json({ error: 'El ID de guitarra no existe' });
+        }
+    }
 
     res.status(204).send();
 })
