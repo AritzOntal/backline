@@ -10,6 +10,17 @@ const db = knex({
     useNullAsDefault: true
 });
 
+db.raw('PRAGMA foreign_keys = ON')
+    .then(() => {
+        console.log('Claves foráneas activadas en SQLite');
+    })
+    .catch(err => {
+        console.error('Error activando claves foráneas:', err);
+    });
+
+module.exports = db;
+
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -22,7 +33,7 @@ app.get('/guitars', async (req, res) => {
 })
 
 app.get('/guitars/:guitarId', async (req, res) => {
-    const result = await db('guitars').where({id_guitar: req.params.guitarId}).first();
+    const result = await db('guitars').where({ id_guitar: req.params.guitarId }).first();
     res.status(200).json(result);
 })
 
@@ -44,11 +55,11 @@ app.delete('/guitars/:guitarId', async (req, res) => {
     res.status(204).send()
 });
 
-app.put('/guitars/:guitarId', async(req, res) => {
-    await db('guitars').where({ id_guitar: req.params.guitarId}).update({
-    model: req.body.model,
-    year: req.body.year,
-    condition: req.body.condition
+app.put('/guitars/:guitarId', async (req, res) => {
+    await db('guitars').where({ id_guitar: req.params.guitarId }).update({
+        model: req.body.model,
+        year: req.body.year,
+        condition: req.body.condition
     });
 
     res.status(204).send();
@@ -62,19 +73,30 @@ app.get('/rentals', async (req, res) => {
 })
 
 app.get('/rentals/:rentalId', async (req, res) => {
-    const result = await db('guitar_rentals').where({id_guitar_rental: req.params.rentalId});
+    const result = await db('guitar_rentals').where({ id_guitar_rental: req.params.rentalId });
     res.status(200).json(result);
 })
 
 app.post('/rentals', async (req, res) => {
-    await db('guitar_rentals').insert({
-        id_client: req.body.id_client,
-        id_guitar: req.body.id_guitar,
-        date: req.body.date,
-        return_date: req.body.return_date
-    });
+    
+    try {
 
-    res.status(201).json({})
+        await db('guitar_rentals').insert({
+            id_guitar: req.body.id_guitar,
+            date: req.body.date,
+            return_date: req.body.return_date,
+            name: req.body.name
+        });
+
+    } catch (error) {
+        console.error('❌ Error al registrar el alquiler:', error.message);
+
+        if (error.message.includes('FOREIGN KEY constraint failed')) {
+            return res.status(400).json({ error: 'El ID de guitarra no existe' });
+        }
+    }
+    
+    res.status(201).json({message: 'Alquiler registrado correctamente'});
 });
 
 app.delete('/rentals/:rentalId', async (req, res) => {
@@ -85,12 +107,12 @@ app.delete('/rentals/:rentalId', async (req, res) => {
     res.status(204).send()
 });
 
-app.put('/rentals/:rentalId', async(req, res) => {
-    await db('guitar_rentals').where({ id_guitar_rental: req.params.rentalId}).update({
-        id_client: req.body.id_client,
+app.put('/rentals/:rentalId', async (req, res) => {
+    await db('guitar_rentals').where({ id_guitar_rental: req.params.rentalId }).update({
         id_guitar: req.body.id_guitar,
         date: req.body.date,
-        return_date: req.body.return_date
+        return_date: req.body.return_date,
+        name: req.body.name
     });
 
     res.status(204).send();
