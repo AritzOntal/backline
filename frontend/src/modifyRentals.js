@@ -16,7 +16,6 @@ window.loadRental = function () {
             document.getElementById("date").value = rentalData.date;
             document.getElementById("return-date").value = rentalData.return_date;
             document.getElementById("name").value = rentalData.name;
-
         })
         .catch(error => {
             console.error("Error al obtener la guitarra:", error);
@@ -48,7 +47,6 @@ window.editRental = function(){
     .then(response => {
         alert("Alquiler actualizado correctamente.");
         console.log(response.data);
-        window.location.href = "rentals.html";
     })
     .catch(error => {
         alert("Error al actualizar el alquiler.");
