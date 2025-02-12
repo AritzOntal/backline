@@ -7,7 +7,6 @@
     "src/rentals.html",
     "src/modify.html",
     "src/modifyRentals.html"
-
   ],
   "scripts": {
     "start": "parcel --no-cache",

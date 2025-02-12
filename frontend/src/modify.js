@@ -1,6 +1,6 @@
 import axios from "axios";
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM completamente cargado.");
     loadGuitar();
 });
@@ -9,7 +9,7 @@ window.loadGuitar = function () {
     const queryParams = new URLSearchParams(window.location.search);
     const guitarId = queryParams.get('id');
     axios.get('http://localhost:8080/guitars/' + guitarId)
-    .then(response => {
+        .then(response => {
             const guitarData = response.data;
             console.log("Datos de guitarra:", guitarData);
             document.getElementById("model").value = guitarData.model;
@@ -21,7 +21,7 @@ window.loadGuitar = function () {
         });
 }
 
-window.editGuitar = function(){
+window.editGuitar = function () {
 
     const queryParams = new URLSearchParams(window.location.search);
     const guitarId = queryParams.get('id');
@@ -39,13 +39,13 @@ window.editGuitar = function(){
         year: NewYear,
         condition: NewCondition
     })
-    .then(response => {
-        alert("Guitarra actualizada correctamente.");
-        console.log(response.data);
-        window.location.href = "index.html";
-    })
-    .catch(error => {
-        alert("Error al actualizar la guitarra.");
-        console.error(error);
-    });
+        .then(response => {
+            alert("Guitarra actualizada correctamente.");
+            console.log(response.data);
+            window.location.href = "index.html";
+        })
+        .catch(error => {
+            alert("Error al actualizar la guitarra.");
+            console.error(error);
+        });
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM completamente cargado.");
     loadRental();
 });
@@ -9,7 +9,7 @@ window.loadRental = function () {
     const queryParams = new URLSearchParams(window.location.search);
     const rentalId = queryParams.get('id');
     axios.get('http://localhost:8080/rentals/' + rentalId)
-    .then(response => {
+        .then(response => {
             const rentalData = response.data;
             console.log("Datos del alquiler:", rentalData);
             document.getElementById("guitar-id").value = rentalData.id_guitar;
@@ -22,7 +22,7 @@ window.loadRental = function () {
         });
 }
 
-window.editRental = function(){
+window.editRental = function () {
 
     const queryParams = new URLSearchParams(window.location.search);
     const rentalId = queryParams.get('id');
@@ -44,12 +44,12 @@ window.editRental = function(){
         return_date: NewReturnDate,
         name: NewName
     })
-    .then(response => {
-        alert("Alquiler actualizado correctamente.");
-        console.log(response.data);
-    })
-    .catch(error => {
-        alert("Error al actualizar el alquiler.");
-        console.error(error);
-    });
+        .then(response => {
+            alert("Alquiler actualizado correctamente.");
+            console.log(response.data);
+        })
+        .catch(error => {
+            alert("Error al actualizar el alquiler.");
+            console.error(error);
+        });
 };

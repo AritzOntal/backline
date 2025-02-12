@@ -31,7 +31,7 @@ document.getElementById('guitar-form').addEventListener('submit', function (even
     //EVITA QUE EL FORMULARIO ENVIE Y RECARGUE LA PAGINA (ANTES DE QUE SE VALIDE EL RESTO DE CODIGO)
     event.preventDefault();
 
-    // Obtener los valores del formulario
+    // OBTIENE VALORES DEL FORMULARIO
     const model = document.getElementById('model').value;
     const year = document.getElementById('year').value;
     const condition = document.getElementById('condition').value;

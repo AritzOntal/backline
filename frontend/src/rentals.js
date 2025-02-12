@@ -42,7 +42,6 @@ window.delRentals = function (id_guitar_rental) {
 }
 
 //PINTA EL ID DE LA GUITARRA SELECCIONADA
-
 const queryParams = new URLSearchParams(window.location.search);
 const guitarId = queryParams.get('id');
 
