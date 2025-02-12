@@ -1,7 +1,8 @@
 # ontalbackline
 Aplicación que permite a los empleados de una empresa de alquiler de guitarras gestionar el inventario y los alquileres que se realicen.
-Desde la pagina principal podemos añadir, editar y eliminar las guitarras de la lista que se muestra.
-Haciendo click en "RENT" nos llevará a los alquileres activos y en el campo "Id Guitarra" estará predefinido su propio id.
+Desde la página principal podemos añadir, editar y eliminar las guitarras de la lista que se muestra.
+Haciendo click en "RENT" nos llevará a los alquileres activos y un formulario donde el campo "Id Guitarra" estará predefinido con su propio id.
+Si intentamos registrar una guitarra que no existe, se mostrará un error.
 
 Una vez descargado el proyecto del repositorio "backline" lo abriremos con nuestro IDE.
 
